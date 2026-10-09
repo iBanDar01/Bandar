@@ -1,0 +1,49 @@
+name: Build unsigned IPA
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'ios/**'
+      - '.github/workflows/build-ipa.yml'
+
+jobs:
+  build:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate project
+        working-directory: ios
+        run: xcodegen generate
+
+      - name: Build device app without signing
+        working-directory: ios
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -project CineBridge.xcodeproj \
+            -scheme CineBridge \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY='' \
+            build \
+            CONFIGURATION_BUILD_DIR="$PWD/build"
+
+      - name: Package unsigned IPA
+        working-directory: ios
+        run: |
+          mkdir -p Payload
+          cp -R build/CineBridge.app Payload/
+          zip -qry CineBridge-unsigned.ipa Payload
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: CineBridge-unsigned-IPA
+          path: ios/CineBridge-unsigned.ipa

@@ -1,0 +1,28 @@
+name: CineBridge
+options:
+  bundleIdPrefix: com.cinebridge
+  deploymentTarget:
+    iOS: "18.0"
+settings:
+  base:
+    SWIFT_VERSION: 5.0
+    IPHONEOS_DEPLOYMENT_TARGET: 18.0
+    TARGETED_DEVICE_FAMILY: "1"
+targets:
+  CineBridge:
+    type: application
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - path: CineBridge
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.cinebridge.camera
+        INFOPLIST_FILE: CineBridge/Info.plist
+        PRODUCT_NAME: CineBridge
+        MARKETING_VERSION: 0.1.0
+        CURRENT_PROJECT_VERSION: 1
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: ""
+    scheme:
+      testTargets: []

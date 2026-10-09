@@ -1,0 +1,47 @@
+CineBridge — تشغيل سريع
+=======================
+
+مهم:
+- التطبيق نفسه يدعم iOS 18 فأعلى.
+- Apple Cinematic الحقيقي داخل تطبيقات الطرف الثالث يحتاج iOS 26 فأعلى + جهاز/صيغة كاميرا تدعم الميزة.
+- على iOS 18–25 يعمل وضع الكاميرا العادي عالي الجودة تلقائياً.
+
+أفضل إعداد سينمائي:
+1) iPhone: Cinematic = ON
+2) الجودة: 4K 30
+3) Bitrate: 32 Mbps (جرّب 28–36 حسب الشبكة)
+4) Aperture: f/2.8 إلى f/4.0
+5) النقل: USB TCP للأكثر ثباتاً، أو Wi‑Fi UDP على شبكة 5/6 GHz قوية
+6) اضغط على وجهك/الشخص في المعاينة لتغيير هدف Cinematic Focus
+
+تشغيل ويندوز من المصدر:
+1) ثبّت OBS Studio.
+2) افتح PowerShell داخل مجلد windows.
+3) شغّل: .\setup_windows.ps1
+4) شغّل: .\start_receiver.bat
+5) اختر usb أو udp والمنفذ 5004 ثم Start Receiver.
+6) شغّل البث من تطبيق الآيفون.
+7) في Discord/Zoom/Teams اختر OBS Virtual Camera.
+
+USB:
+- ثبّت iTunes Desktop من Apple حتى تتوفر Apple Mobile Device Service.
+- وصّل الآيفون بالكيبل واضغط Trust.
+- اختر USB TCP في تطبيق الآيفون ثم Start.
+- اختر usb في Receiver ثم Start.
+- CineBridge يشغّل usbmux Port Forward داخلياً.
+
+Wi‑Fi:
+- شغّل Receiver أولاً وسيعرض IPv4 للكمبيوتر.
+- اكتب نفس IPv4 في تطبيق الآيفون، Port 5004.
+- الكمبيوتر يفضل Ethernet والآيفون Wi‑Fi 5/6/6E.
+
+بناء تطبيق الآيفون:
+- Mac: Xcode 26 + XcodeGen ثم افتح المشروع واختر Signing Team.
+- Windows فقط: ارفع المشروع إلى GitHub وشغّل Action باسم Build unsigned IPA ثم وقّع IPA بحساب Apple الخاص بك قبل تثبيته.
+
+ملاحظة جودة:
+- اختيار 4K داخل CineBridge يعني أن المصدر يصل للكمبيوتر 4K إذا كان التنسيق مدعوماً. برنامج الاستقبال أو Discord/Zoom قد يختار دقة إخراج أقل من الكاميرا الافتراضية حسب التطبيق.
+
+لأقل تأخير:
+- Standard: 1080p60 / 18 Mbps.
+- Cinematic: 1080p30 أو 4K30 لأن Apple Cinematic يدعم حتى 30fps في التنسيقات المعلنة حالياً.
