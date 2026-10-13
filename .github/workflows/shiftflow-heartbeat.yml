@@ -1,0 +1,20 @@
+﻿name: ShiftFlow Heartbeat
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  heartbeat:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Wake ShiftFlow round scheduler
+        run: |
+          curl --fail --silent --show-error --max-time 20 \
+            --retry 2 --retry-delay 5 \
+            https://shiftflow-kasb.floot.app/_api/heartbeat
